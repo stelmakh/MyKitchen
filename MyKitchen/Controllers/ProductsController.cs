@@ -21,10 +21,19 @@ namespace MyKitchen.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchQuery)
         {
+
             _logger.LogInformation("Getting the list of products");
-            return View(await _context.Product.ToListAsync());
+            var products = from p in _context.Product
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchQuery))
+            {
+                products = products.Where(s => s.Name.ToLower().Contains(searchQuery.ToLower()));
+            }
+
+            return View(await products.ToListAsync());
         }
 
         // GET: Products/Details/5

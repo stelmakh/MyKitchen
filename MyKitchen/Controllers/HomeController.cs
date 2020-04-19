@@ -20,11 +20,10 @@ namespace MyKitchen.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Message"] = "Hi there";
-            return View();
+            return RedirectToAction("Index", "Products");
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
