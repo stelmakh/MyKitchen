@@ -13,6 +13,9 @@
     <Folder Include="Resources\" />
     <Folder Include="Resources\Views\" />
     <Folder Include="Resources\Views\Products\" />
+    <Folder Include="Resources\Models\" />
+    <Folder Include="Resources\Views\Shared\" />
+    <Folder Include="Resources\Views\Home\" />
   </ItemGroup>
     
    <ItemGroup>

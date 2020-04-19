@@ -1,6 +1,10 @@
-﻿@{
-    ViewData["Title"] = "About";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["About"];
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Author: <a href="https://github.com/stelmakh">Volodymyr Stelmakh</a></p>
+<p>@Localizer["Author"]: <a href="https://github.com/stelmakh">@Localizer["Volodymyr Stelmakh"]</a></p>
