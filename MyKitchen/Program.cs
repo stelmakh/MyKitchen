@@ -3,6 +3,9 @@ using NLog.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using MyKitchen.Data;
+using MyKitchen.Models;
 
 namespace MyKitchen
 {
@@ -14,7 +17,23 @@ namespace MyKitchen
             try
             {
                 logger.Debug("init main");
-                CreateHostBuilder(args).Build().Run();
+                var host = CreateHostBuilder(args).Build();
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+
+                    try
+                    {
+                        SeedData.Initialize(services);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, "An error occurred seeding the DB.");
+                    }
+                }
+
+                host.Run();
             }
             catch (Exception exception)
             {
