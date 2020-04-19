@@ -20,6 +20,7 @@ namespace MyKitchen.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Message"] = "Hi there";
             return View();
         }
 
