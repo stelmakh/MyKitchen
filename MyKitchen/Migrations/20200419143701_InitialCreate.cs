@@ -12,11 +12,12 @@ namespace MyKitchen.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 60, nullable: false),
                     Carbs = table.Column<float>(nullable: false),
                     Fats = table.Column<float>(nullable: false),
                     Protein = table.Column<float>(nullable: false),
-                    Calories = table.Column<float>(nullable: false)
+                    Calories = table.Column<float>(nullable: false),
+                    Notes = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {

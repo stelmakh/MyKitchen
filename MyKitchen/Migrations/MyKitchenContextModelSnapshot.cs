@@ -31,7 +31,13 @@ namespace MyKitchen.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(250);
 
                     b.Property<float>("Protein")
                         .HasColumnType("REAL");

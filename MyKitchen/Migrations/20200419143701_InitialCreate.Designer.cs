@@ -8,7 +8,7 @@ using MyKitchen.Data;
 namespace MyKitchen.Migrations
 {
     [DbContext(typeof(MyKitchenContext))]
-    [Migration("20200419105544_InitialCreate")]
+    [Migration("20200419143701_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,13 @@ namespace MyKitchen.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(250);
 
                     b.Property<float>("Protein")
                         .HasColumnType("REAL");

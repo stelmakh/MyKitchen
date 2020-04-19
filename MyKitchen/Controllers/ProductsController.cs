@@ -70,7 +70,7 @@ namespace MyKitchen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Carbs,Fats,Protein,Calories")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Carbs,Fats,Protein,Calories,Notes")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace MyKitchen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Carbs,Fats,Protein,Calories")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Carbs,Fats,Protein,Calories,Notes")] Product product)
         {
             _logger.LogInformation("Updating the product with id: {id}", id);
             if (id != product.Id)
