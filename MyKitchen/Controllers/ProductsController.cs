@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MyKitchen.Data;
 using MyKitchen.Models;
 
@@ -13,21 +12,26 @@ namespace MyKitchen.Controllers
     public class ProductsController : Controller
     {
         private readonly MyKitchenContext _context;
+        private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(MyKitchenContext context)
+        public ProductsController(MyKitchenContext context, ILogger<ProductsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("Getting the list of products");
             return View(await _context.Product.ToListAsync());
         }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            _logger.LogInformation("Getting the product details for id: {id}", id);
+
             if (id == null)
             {
                 return NotFound();
@@ -35,8 +39,10 @@ namespace MyKitchen.Controllers
 
             var product = await _context.Product
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (product == null)
             {
+                _logger.LogInformation("No product with id: {id}", id);
                 return NotFound();
             }
 
@@ -46,6 +52,7 @@ namespace MyKitchen.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            _logger.LogInformation("Getting the product create page");
             return View();
         }
 
@@ -68,6 +75,7 @@ namespace MyKitchen.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            _logger.LogInformation("Getting the product edit page for id: {id}", id);
             if (id == null)
             {
                 return NotFound();
@@ -76,6 +84,7 @@ namespace MyKitchen.Controllers
             var product = await _context.Product.FindAsync(id);
             if (product == null)
             {
+                _logger.LogInformation("No product with id: {id}", id);
                 return NotFound();
             }
             return View(product);
@@ -88,6 +97,7 @@ namespace MyKitchen.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Carbs,Fats,Protein,Calories")] Product product)
         {
+            _logger.LogInformation("Updating the product with id: {id}", id);
             if (id != product.Id)
             {
                 return NotFound();
@@ -119,6 +129,7 @@ namespace MyKitchen.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            _logger.LogInformation("Getting the product delete page for id: {id}", id);
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +150,7 @@ namespace MyKitchen.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            _logger.LogInformation("Product delete confirmed for id: {id}", id);
             var product = await _context.Product.FindAsync(id);
             _context.Product.Remove(product);
             await _context.SaveChangesAsync();
